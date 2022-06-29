@@ -2,6 +2,7 @@ package hw225.Controller;
 
 import hw225.Service.IFileService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +13,11 @@ import java.util.Objects;
 
 @Controller
 public class FileController {
-
-    private final IFileService fileService;
-
-    public FileController(IFileService fileService) {
-        this.fileService = fileService;
-    }
+    @Autowired
+    private IFileService fileService;
 
     @GetMapping("/")
-    public String home(String path, Model model) {
+    public String home(Model model) {
         model.addAttribute("path", "");
         model.addAttribute("listFile", fileService.getRoots());
         return "index";
