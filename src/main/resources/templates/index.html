@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form method="post" action="/input">
+  <input name="path" th:attr="value=${path}" placeholder="Path">
+</form>
+<form method="post" action="/back">
+  <button type="submit" th:attr="value=${path}" name="path">Back</button>
+</form>
+
+    <table border="1" cellspacing="10" >
+        <tr>
+            <th>Name</th>
+            <th>Date Create</th>
+            <th>Date Update</th>
+            <th>Size</th>
+        </tr>
+        <th:block th:each="file : ${listFile}">
+        <div th:if="${file.isDirectory}">
+            <form method="post" action="/next">
+            <tr>
+                <td>
+                    <button type="submit" th:text ="${file.name}"> </button>
+                </td>
+                <td th:text ="${file.dateCreate}"></td>
+                <td th:text ="${file.dateUpdate}"></td>
+            </tr>
+                <input type="hidden" th:attr="value=${path}" name="path">
+                <input type="hidden" th:attr="value=${file.name}" name="name">
+            </form>
+        </div>
+        <div class="content-file" th:unless="${file.isDirectory}">
+            <tr>
+                <td th:text ="${file.name}"></td>
+                <td th:text ="${file.dateCreate}"></td>
+                <td th:text ="${file.dateUpdate}"></td>
+                <td th:text ="${file.size}"></td>
+            </tr>
+        </div>
+        </th:block>
+    </table>
+</body>
+</html>
